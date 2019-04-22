@@ -1,9 +1,9 @@
 pragma solidity ^0.5.0;
 
-import 'node_modules/openzeppelin-solidity/contracts/utils/Address.sol';
-import 'node_modules/openzeppelin-solidity/contracts/drafts/Counters.sol';
-import 'node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol';
-import 'node_modules/openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/utils/Address.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/drafts/Counters.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol';
+import '../../node_modules/openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol';
 import "./Oraclize.sol";
 
 contract Ownable {
@@ -171,7 +171,7 @@ contract ERC721 is Pausable, ERC165 {
 
         // TODO return the token balance of given address
         // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
-        return _ownedTokensCount[owner].increment();                
+        return _ownedTokensCount[owner].current();                
     }
 
     function ownerOf(uint256 tokenId) public view returns (address) {
@@ -270,7 +270,7 @@ contract ERC721 is Pausable, ERC165 {
     function _mint(address to, uint256 tokenId) internal {
 
         // TODO revert if given tokenId already exists or given address is invalid
-        require(_exists(ownerOf(tokenId)), "The tokenId already exists!");
+        require(_exists(tokenId), "The tokenId already exists!");
         require(Address.isContract(to) == false, "The receiver address is not valid!");
   
         // TODO mint tokenId to given address & increase token count of owner
@@ -285,8 +285,7 @@ contract ERC721 is Pausable, ERC165 {
     // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
     function _transferFrom(address from, address to, uint256 tokenId) internal {
 
-        // TODO: require from address is the owner of the given token
-        address tokenOwner = _tokenOwner[tokenId];
+        // TODO: require from address is the owner of the given token        
         require(from == ownerOf(tokenId), "The from address is not the owner of the token!");        
 
         // TODO: require token is being transfered to valid address
