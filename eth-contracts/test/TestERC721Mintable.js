@@ -1,5 +1,3 @@
-//import { AssertionError } from "assert";
-
 var ERC721MintableComplete = artifacts.require('ERC721MintableComplete');
 const truffleAssert = require('truffle-assertions');
 
