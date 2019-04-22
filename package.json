@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "lite-server",
-    "test": "cd eth-contracts && truffle.cmd test ./test/TestERC721Mintable.js",
+    "test": "cd eth-contracts && truffle.cmd test",
     "deploy-dev": "cd eth-contracts && truffle.cmd compile --reset && truffle.cmd deploy --network development --reset"
   },
   "keywords": [],
