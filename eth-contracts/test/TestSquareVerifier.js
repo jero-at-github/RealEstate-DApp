@@ -9,19 +9,8 @@ contract('Verifier', accounts => {
         it.only('Test verification with correct proof', async function () { 
      
             let instance = await Verifier.deployed();               
-
-            /*
-            this.contract = await Verifier.new({from: accounts[0]});       
-            this.contract.events.Verified({
-                fromBlock: 0
-            }, function (error, event) {
-            
-                assert.equal(error, null, error);
-                console.log(event);           
-            });
-            */
-
-            await instance.verifyTx(
+           
+            let result = await instance.verifyTx.call(
                 proof.proof.A, 
                 proof.proof.A_p, 
                 proof.proof.B, 
@@ -31,7 +20,9 @@ contract('Verifier', accounts => {
                 proof.proof.H, 
                 proof.proof.K, 
                 proof.input
-            );                                 
+            );           
+            
+            assert.equal(result, true, "verifyTx failed!");
         })
 
         it('Test verification with incorrect proof', async function () { 
