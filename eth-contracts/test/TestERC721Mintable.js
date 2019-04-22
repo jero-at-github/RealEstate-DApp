@@ -1,6 +1,7 @@
 //import { AssertionError } from "assert";
 
 var ERC721MintableComplete = artifacts.require('ERC721MintableComplete');
+const truffleAssert = require('truffle-assertions');
 
 contract('TestERC721Mintable', accounts => {
 
@@ -55,10 +56,17 @@ contract('TestERC721Mintable', accounts => {
 
         it('should transfer token from one owner to another', async function () { 
             
+            await this.contract.transferFrom(account_two, account_three, 1, {from: account_two});
+
+            let balance2 = await this.contract.balanceOf.call(account_two);
+            let balance3 = await this.contract.balanceOf.call(account_three);
+
+            assert.equal(balance2, (numTokensToMint / 2) - 1, "Balance for account 2 doesn't match!");
+            assert.equal(balance3, (numTokensToMint / 2) + 1, "Balance for account 3 doesn't match!");
         })
     });
 
-    describe.skip('have ownership properties', function () {
+    describe('have ownership properties', function () {
 
         beforeEach(async function () { 
             this.contract = await ERC721MintableComplete.new({from: account_one});
@@ -66,10 +74,16 @@ contract('TestERC721Mintable', accounts => {
 
         it('should fail when minting when address is not contract owner', async function () { 
             
+            await truffleAssert.reverts(
+                this.contract.mint(account_three, 1, {from: account_two}), 
+                "revert " + "The sender is not the owner of the contract!"
+            );
         })
 
         it('should return contract owner', async function () { 
-            
+
+            let contractOwner = await this.contract.getOwner.call();
+            assert.equal(account_one, contractOwner, "The contract owner doesn't match!");
         })
 
     });
