@@ -270,12 +270,12 @@ contract ERC721 is Pausable, ERC165 {
     function _mint(address to, uint256 tokenId) internal {
 
         // TODO revert if given tokenId already exists or given address is invalid
-        require(_exists(tokenId), "The tokenId already exists!");
+        require(!_exists(tokenId), "The tokenId already exists!");
         require(Address.isContract(to) == false, "The receiver address is not valid!");
   
         // TODO mint tokenId to given address & increase token count of owner
         _tokenOwner[tokenId] = to;
-        _ownedTokensCount[to].increment();
+        _ownedTokensCount[to].increment();        
 
         // TODO emit Transfer event
         emit Transfer(address(0), to, tokenId);
@@ -532,13 +532,13 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
     // TODO: create external getter functions for name, symbol, and baseTokenURI
 
-    function getName() public returns(string memory) {
+    function getName() public view returns(string memory) {
         return _name;
     }
-     function getSymbol() public returns(string memory) {
+     function getSymbol() public view returns(string memory) {
         return _symbol;
     }
-     function getBaseTokenURI() public returns(string memory) {
+     function getBaseTokenURI() public view returns(string memory) {
         return _baseTokenURI;
     }
 
@@ -569,7 +569,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 //      -returns a true boolean upon completion of the function
 //      -calls the superclass mint and setTokenURI functions
 
-contract CustomERC721Token is ERC721Metadata {
+contract ERC721MintableComplete is ERC721Metadata {
 
     string private _baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
 
@@ -580,8 +580,10 @@ contract CustomERC721Token is ERC721Metadata {
 
         bool result = false;
 
-        mint(to, tokenId);
+        _mint(to, tokenId);
         setTokenURI(tokenId);
+
+        result = true;
 
         return result;
     }
