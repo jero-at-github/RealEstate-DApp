@@ -268,7 +268,7 @@ contract ERC721 is Pausable, ERC165 {
     function _mint(address to, uint256 tokenId) internal {
 
         // TODO revert if given tokenId already exists or given address is invalid
-        require(_tokenOwner[tokenId] == address(0), "The tokenId already exists!");
+        require(_exists(ownerOf(tokenId)), "The tokenId already exists!");
         require(Address.isContract(to) == false, "The receiver address is not valid!");
   
         // TODO mint tokenId to given address & increase token count of owner
@@ -276,7 +276,7 @@ contract ERC721 is Pausable, ERC165 {
         _ownedTokensCount[to].increment();
 
         // TODO emit Transfer event
-        emit Transfer(msg.sender, to, tokenId);
+        emit Transfer(address(0), to, tokenId);
     }
 
     // @dev Internal function to transfer ownership of a given token ID to another address.
@@ -284,14 +284,20 @@ contract ERC721 is Pausable, ERC165 {
     function _transferFrom(address from, address to, uint256 tokenId) internal {
 
         // TODO: require from address is the owner of the given token
+        address tokenOwner = _tokenOwner[tokenId];
+        require(from == ownerOf(tokenId), "The from address is not the owner of the token!");        
 
         // TODO: require token is being transfered to valid address
+        require(Address.isContract(to) == false, "The to address is not valid!");
         
         // TODO: clear approval
+        _clearApproval(tokenId);
 
         // TODO: update token counts & transfer ownership of the token ID 
+        _tokenOwner[tokenId] = to;        
 
         // TODO: emit correct event
+        emit Transfer(from, to, tokenId);
     }
 
     /**
@@ -497,8 +503,14 @@ contract ERC721Enumerable is ERC165, ERC721 {
 contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     
     // TODO: Create private vars for token _name, _symbol, and _baseTokenURI (string)
+    string private token;
+    string private _name;
+    string private _symbol;
+    string private _baseTokenURI;
+
 
     // TODO: create private mapping of tokenId's to token uri's called '_tokenURIs'
+    mapping (uint256 => string) private _tokenURIs;
 
     bytes4 private constant _INTERFACE_ID_ERC721_METADATA = 0x5b5e139f;
     /*
@@ -511,11 +523,24 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 
     constructor (string memory name, string memory symbol, string memory baseTokenURI) public {
         // TODO: set instance var values
+        _name = name;
+        _symbol = symbol;
+        _baseTokenURI = baseTokenURI;
 
         _registerInterface(_INTERFACE_ID_ERC721_METADATA);
     }
 
     // TODO: create external getter functions for name, symbol, and baseTokenURI
+
+    function getName() public returns(string memory) {
+        return _name;
+    }
+     function getSymbol() public returns(string memory) {
+        return _symbol;
+    }
+     function getBaseTokenURI() public returns(string memory) {
+        return _baseTokenURI;
+    }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
         require(_exists(tokenId));
