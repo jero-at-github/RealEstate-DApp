@@ -6,7 +6,7 @@ contract('Verifier', accounts => {
          
     describe('Verifier test', function () {        
 
-        it.only('Test verification with correct proof', async function () { 
+        it('Test verification with correct proof', async function () { 
      
             let instance = await Verifier.deployed();               
            
@@ -27,6 +27,21 @@ contract('Verifier', accounts => {
 
         it('Test verification with incorrect proof', async function () { 
           
+            let instance = await Verifier.deployed();               
+           
+            let result = await instance.verifyTx.call(
+                proof.proof.A_p, // wrong value
+                proof.proof.A_p, 
+                proof.proof.B, 
+                proof.proof.B_p, 
+                proof.proof.C, 
+                proof.proof.C_p, 
+                proof.proof.H, 
+                proof.proof.K, 
+                proof.input
+            );           
+            
+            assert.equal(result, false, "verifyTx succeded!");
         })        
     });
     
