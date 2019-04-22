@@ -201,7 +201,9 @@ contract ERC721 is Pausable, ERC165 {
     function getApproved(uint256 tokenId) public view returns (address) {
         
         // TODO return token approval if it exists
-        return _tokenApprovals[tokenId];
+        address approval = _tokenApprovals[tokenId];
+        require(approval != address(0),"The approval doesn't exist!");        
+        return approval;
     }
 
     /**
@@ -502,8 +504,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
 
 contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     
-    // TODO: Create private vars for token _name, _symbol, and _baseTokenURI (string)
-    string private token;
+    // TODO: Create private vars for token _name, _symbol, and _baseTokenURI (string)    
     string private _name;
     string private _symbol;
     string private _baseTokenURI;
@@ -545,8 +546,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     function tokenURI(uint256 tokenId) external view returns (string memory) {
         require(_exists(tokenId));
         return _tokenURIs[tokenId];
-    }
-
+    }    
 
     // TODO: Create an internal function to set the tokenURI of a specified tokenId
     // It should be the _baseTokenURI + the tokenId in string form
@@ -554,6 +554,10 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     // TIP #2: you can also use uint2str() to convert a uint to a string
         // see https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.5.sol for strConcat()
     // require the token exists before setting
+    function setTokenURI(uint256 tokenId) public {        
+        require(_exists(tokenId),"The token doesn't exist!"); 
+        _tokenURIs[tokenId] = strConcat(getBaseTokenURI(), uint2str(tokenId));
+    }
 
 }
 
@@ -565,6 +569,25 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 //      -takes in a 'to' address, tokenId, and tokenURI as parameters
 //      -returns a true boolean upon completion of the function
 //      -calls the superclass mint and setTokenURI functions
+
+contract CustomERC721Token is ERC721Metadata {
+
+    string private _baseTokenURI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
+
+    constructor() ERC721Metadata("", "", _baseTokenURI) public {
+    }
+
+    function mint(address to, uint256 tokenId) public onlyOwner returns(bool) {
+
+        bool result = false;
+
+        mint(to, tokenId);
+        setTokenURI(tokenId);
+
+        return result;
+    }
+    
+}
 
 
 
