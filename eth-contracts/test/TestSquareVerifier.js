@@ -30,7 +30,7 @@ contract('Verifier', accounts => {
             let instance = await Verifier.deployed();               
            
             let result = await instance.verifyTx.call(
-                proof.proof.A_p, // wrong value
+                proof.proof.A, 
                 proof.proof.A_p, 
                 proof.proof.B, 
                 proof.proof.B_p, 
@@ -38,7 +38,7 @@ contract('Verifier', accounts => {
                 proof.proof.C_p, 
                 proof.proof.H, 
                 proof.proof.K, 
-                proof.input
+                [2,7]
             );           
             
             assert.equal(result, false, "verifyTx succeded!");
