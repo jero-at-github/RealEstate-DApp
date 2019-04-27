@@ -65,26 +65,20 @@ contract SolnSquareVerifier is ERC721MintableComplete {
         // generate the key
         bytes32 key = keccak256(abi.encodePacked(a, a_p, b, b_p, c, c_p, h, k, input));
 
+        require(submittedSolutions[key] == false, "This solution was already used!");
+
         // check if the proof is valid
         bool isValidProof = SquareVerifier.verifyTx(a, a_p, b, b_p, c, c_p, h, k, input);           
 
+        require(isValidProof == true, "The provided proof is not valid!");
+
         bool result;
+                
+        // store the solution
+        addSolution(key, tokenId, msg.sender);
 
-        // check if the proof was already used
-        if (submittedSolutions[key] == true) {
-            result = false;
-        }
-        // check if the proof is valid
-        else if (isValidProof) {
-            // store the solution
-            addSolution(key, tokenId, msg.sender);
-
-            // mint the token
-            result = mint(to, tokenId);              
-        }
-        else {
-            result = false;
-        }        
+        // mint the token
+        result = mint(to, tokenId);                      
 
         return result;
     }
