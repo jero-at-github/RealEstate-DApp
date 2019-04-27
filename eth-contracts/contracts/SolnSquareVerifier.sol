@@ -71,18 +71,14 @@ contract SolnSquareVerifier is ERC721MintableComplete {
         bool isValidProof = SquareVerifier.verifyTx(a, a_p, b, b_p, c, c_p, h, k, input);           
 
         require(isValidProof == true, "The provided proof is not valid!");
-
-        bool result;                      
-
+        
         // mint the token
-        result = mint(to, tokenId);                      
+        mint(to, tokenId);                      
+        
+        // store the solution
+        addSolution(key, tokenId, msg.sender);        
 
-        if (result) {
-            // store the solution
-            addSolution(key, tokenId, msg.sender);
-        }
-
-        return result;
+        return true;
     }
 }
 
