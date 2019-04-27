@@ -55,10 +55,40 @@ contract('SolnSquareVerifier', accounts => {
         });  
         
         // Mint with the same proof
+        it('Mint with same token', async function () {                             
+                                           
+            let proof = proof_3_9;
+            let tokenId = 1;
+            let to = account_two;
+            let from = account_one;
+            
+            //let test = await this.contract.submittedSolutions.call();
+            //console.log(test);
+
+            await truffleAssert.reverts(
+                this.contract.mintToken(                
+                    to,
+                    tokenId,
+                    proof.proof.A, 
+                    proof.proof.A_p, 
+                    proof.proof.B, 
+                    proof.proof.B_p, 
+                    proof.proof.C, 
+                    proof.proof.C_p, 
+                    proof.proof.H, 
+                    proof.proof.K, 
+                    proof.input,
+                    {from: from}
+                ), 
+                "revert " + "The tokenId already exists! -- Reason given: The tokenId already exists!."
+            );                        
+        });       
+
+        // Mint with the same proof
         it('Mint with same proof', async function () {                             
                                            
             let proof = proof_2_4;
-            let tokenId = 1;
+            let tokenId = 2;
             let to = account_two;
             let from = account_one;
             
@@ -88,7 +118,7 @@ contract('SolnSquareVerifier', accounts => {
         it('Mint with a second correct proof', async function () {                             
                                
             let proof = proof_3_9;
-            let tokenId = 1;
+            let tokenId = 2;
             let to = account_two;
             let from = account_one;
 
@@ -109,7 +139,7 @@ contract('SolnSquareVerifier', accounts => {
             )
             
             let totalSupply = await this.contract.totalSupply.call();
-            assert.equal(totalSupply, 1, "TotalSupply doesn't match!");
+            assert.equal(totalSupply, 2, "TotalSupply doesn't match!");
         });       
 
 
