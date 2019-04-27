@@ -47,7 +47,7 @@ contract SolnSquareVerifier is ERC721MintableComplete {
     // TODO Create a function to mint new NFT only after the solution has been verified
     //  - make sure the solution is unique (has not been used before)
     //  - make sure you handle metadata as well as tokenSuplly            
-    function mint(
+    function mintToken(
             address to, 
             uint256 tokenId,
             uint[2] memory a,
@@ -72,13 +72,15 @@ contract SolnSquareVerifier is ERC721MintableComplete {
 
         require(isValidProof == true, "The provided proof is not valid!");
 
-        bool result;
-                
-        // store the solution
-        addSolution(key, tokenId, msg.sender);
+        bool result;                      
 
         // mint the token
         result = mint(to, tokenId);                      
+
+        if (result) {
+            // store the solution
+            addSolution(key, tokenId, msg.sender);
+        }
 
         return result;
     }
