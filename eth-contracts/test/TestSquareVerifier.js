@@ -1,6 +1,6 @@
 var Verifier = artifacts.require('Verifier');
 const truffleAssert = require('truffle-assertions');
-const proof = require("../../zokrates/code/square/proof.json");
+const proof = require("../../zokrates/code/square/proof_11_121.json");
 
 contract('Verifier', accounts => {
          
