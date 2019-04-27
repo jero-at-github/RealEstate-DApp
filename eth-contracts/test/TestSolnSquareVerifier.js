@@ -2,6 +2,8 @@
 // Test if an ERC721 token can be minted for contract - SolnSquareVerifier
 
 var SolnSquareVerifier = artifacts.require('SolnSquareVerifier');
+var Verifier = artifacts.require('Verifier');
+
 const truffleAssert = require('truffle-assertions');
 
 const proof_2_4 = require("../../zokrates/code/square/proof_2_4.json");
@@ -15,32 +17,45 @@ contract('SolnSquareVerifier', accounts => {
     const account_one = accounts[0];
     const account_two = accounts[1];
     const account_three = accounts[2];
+    
+    async function mint(contract, proof, to, tokenId, from) {
+
+        let result = await contract.mintToken(                
+            to,
+            tokenId,
+            proof.proof.A, 
+            proof.proof.A_p, 
+            proof.proof.B, 
+            proof.proof.B_p, 
+            proof.proof.C, 
+            proof.proof.C_p, 
+            proof.proof.H, 
+            proof.proof.K, 
+            proof.input,
+            {from: from}
+        );         
+        
+        return result;
+    }    
 
     describe('SolnSquareVerifier test', function () {        
+        
+        beforeEach(async function () { 
 
-        it('Test verification with correct proof', async function () { 
-     
-            let instance = await SolnSquareVerifier.deployed();               
-           
+            let verifier = await Verifier.new();
+            this.contract = await SolnSquareVerifier.new(verifier.address, {from: account_one});                           
+        });
+
+        it('Mint with correct proof', async function () {                             
+                               
             let proof = proof_2_4;
+            let tokenId = 1;
 
-            let result = await instance.verifyTx.send(
-                0,
-                account_two,
-                proof.proof.A, 
-                proof.proof.A_p, 
-                proof.proof.B, 
-                proof.proof.B_p, 
-                proof.proof.C, 
-                proof.proof.C_p, 
-                proof.proof.H, 
-                proof.proof.K, 
-                proof.input,
-                {from: account_one}
-            );           
+            await mint(this.contract, proof, account_two, tokenId, account_one);
             
-            assert.equal(result, true, "verifyTx failed!");
-        })        
+            let totalSupply = await this.contract.totalSupply.call();
+            assert.equal(totalSupply, 1, "TotalSupply doesn't match!");
+        });       
     });
     
 })
