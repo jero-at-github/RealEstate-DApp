@@ -52,38 +52,8 @@ contract('SolnSquareVerifier', accounts => {
             
             let totalSupply = await this.contract.totalSupply.call();
             assert.equal(totalSupply, 1, "TotalSupply doesn't match!");
-        });       
-
-        // Mint with incorrect proof
-        it('Mint with incorrect proof', async function () {                             
-                               
-            let proof = proof_3_9;
-            proof.input = ["0x5", "0x1"];
-            let tokenId = 2;
-            let to = account_two;
-            let from = account_one;
-
-            //await mint(this.contract, proof, account_two, tokenId, account_one);
-
-            await truffleAssert.reverts(
-                this.contract.mintToken(                
-                    to,
-                    tokenId,
-                    proof.proof.A, 
-                    proof.proof.A_p, 
-                    proof.proof.B, 
-                    proof.proof.B_p, 
-                    proof.proof.C, 
-                    proof.proof.C_p, 
-                    proof.proof.H, 
-                    proof.proof.K, 
-                    proof.input,
-                    {from: from}
-                ), 
-                "revert " + "The provided proof is not valid! -- Reason given: The provided proof is not valid!."
-            );                        
-        });       
-
+        });  
+        
         // Mint with the same proof
         it('Mint with same proof', async function () {                             
                                            
@@ -113,6 +83,66 @@ contract('SolnSquareVerifier', accounts => {
                 "revert " + "This solution was already used! -- Reason given: This solution was already used!."
             );                        
         });       
+
+        // Mint with correct proof
+        it('Mint with a second correct proof', async function () {                             
+                               
+            let proof = proof_3_9;
+            let tokenId = 1;
+            let to = account_two;
+            let from = account_one;
+
+            //await mint(this.contract, proof, account_two, tokenId, account_one);
+            await this.contract.mintToken(                
+                to,
+                tokenId,
+                proof.proof.A, 
+                proof.proof.A_p, 
+                proof.proof.B, 
+                proof.proof.B_p, 
+                proof.proof.C, 
+                proof.proof.C_p, 
+                proof.proof.H, 
+                proof.proof.K, 
+                proof.input,
+                {from: from}
+            )
+            
+            let totalSupply = await this.contract.totalSupply.call();
+            assert.equal(totalSupply, 1, "TotalSupply doesn't match!");
+        });       
+
+
+        // Mint with incorrect proof
+        it('Mint with incorrect proof', async function () {                             
+                               
+            let proof = proof_4_16;
+            proof.input = ["0x5", "0x1"];
+            let tokenId = 2;
+            let to = account_two;
+            let from = account_one;
+
+            //await mint(this.contract, proof, account_two, tokenId, account_one);
+
+            await truffleAssert.reverts(
+                this.contract.mintToken(                
+                    to,
+                    tokenId,
+                    proof.proof.A, 
+                    proof.proof.A_p, 
+                    proof.proof.B, 
+                    proof.proof.B_p, 
+                    proof.proof.C, 
+                    proof.proof.C_p, 
+                    proof.proof.H, 
+                    proof.proof.K, 
+                    proof.input,
+                    {from: from}
+                ), 
+                "revert " + "The provided proof is not valid! -- Reason given: The provided proof is not valid!."
+            );                        
+        });       
+
     });
     
 })
