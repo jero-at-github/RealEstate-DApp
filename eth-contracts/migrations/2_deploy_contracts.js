@@ -34,13 +34,19 @@ module.exports = function (deployer, network, accounts) {
                 // Mint 10 tokens
                 let SolnSquareVerifierContract = await SolnSquareVerifier.deployed();
 
-                const account_one = accounts[0];
-                const account_two = accounts[1];
+                let account_one = "";
+
+                if (network == "development") {
+                    account_one = accounts[0];
+                }
+                else if (network == "rinkeby-fork" || network == "rinkeby") {
+                    account_one = deployer.networks.rinkeby.from;
+                }                
 
                 for (let counter = 0; counter <= 9; counter++) {
                                                             
                     let tokenId = counter + 1;
-                    let to = account_two;
+                    let to = account_one;
                     let from = account_one;
 
                     await SolnSquareVerifierContract.mintToken(                
