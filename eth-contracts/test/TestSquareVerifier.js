@@ -3,13 +3,17 @@ const truffleAssert = require('truffle-assertions');
 const proof = require("../../zokrates/code/square/proof_11_121.json");
 
 contract('Verifier', accounts => {
-         
+             
     describe('Verifier test', function () {        
 
+        let instance;
+
+        before(async function() {
+            instance = await Verifier.new();       
+        })
+        
         it('Test verification with correct proof', async function () { 
-     
-            let instance = await Verifier.deployed();               
-           
+                          
             let result = await instance.verifyTx.call(
                 proof.proof.A, 
                 proof.proof.A_p, 
@@ -26,9 +30,7 @@ contract('Verifier', accounts => {
         })
 
         it('Test verification with incorrect proof', async function () { 
-          
-            let instance = await Verifier.deployed();               
-           
+                                       
             let result = await instance.verifyTx.call(
                 proof.proof.A, 
                 proof.proof.A_p, 
