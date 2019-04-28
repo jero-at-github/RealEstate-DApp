@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "lite-server",
     "test": "cd eth-contracts && truffle.cmd test",
-    "deploy-dev": "cd eth-contracts && truffle.cmd compile --reset && truffle.cmd deploy --network development --reset",
-    "deploy-rinkeby": "cd eth-contracts && truffle.cmd compile --reset && truffle.cmd deploy --network rinkeby --reset"
+    "deploy-dev": "cd eth-contracts && truffle.cmd compile --reset && truffle.cmd migrate --network development --reset",
+    "deploy-rinkeby": "cd eth-contracts && truffle.cmd compile --reset && truffle.cmd migrate --network rinkeby --reset"
   },
   "keywords": [],
   "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
