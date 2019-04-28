@@ -2,6 +2,8 @@
 
 The capstone will build upon the knowledge you have gained in the course in order to build a decentralized housing product. 
 
+ Contract in Rinkeby: https://rinkeby.etherscan.io/address/0xfb20bb5cec29bb26d953e0374ebfd87ce98e3368
+
 # Project Resources
 
 * [Remix - Solidity IDE](https://remix.ethereum.org/)
