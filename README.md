@@ -1,7 +1,7 @@
 # Udacity Blockchain Capstone
 
 #### DEPLOYMENT:
-The ```.secret``` containing the mnemonic file is not provided, please use your own one.
+The ```.secret``` file containing the mnemonic file is not provided, please use your own one in case you want to test the deployments.
 Local: ```npm run deploy-dev```
 Rinkeby: ```npm run deploy-rinkeby```
 
