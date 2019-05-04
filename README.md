@@ -1,17 +1,21 @@
 # Udacity Blockchain Capstone
 
-TESTS:
-Please, run: 
+#### DEPLOYMENT:
+The ```.secret``` containing the mnemonic file is not provided, please use your own one.
+Local: ```npm run deploy-dev```
+Rinkeby: ```npm run deploy-rinkeby```
+
+#### TESTS:
 ```npm run test```
 
-ZOKRATES:
+#### ZOKRATES:
 The zokrates folder contains 10 proof files for different values (square-result)
 The verifier is located in the "contracts" folder under the name ```Verifier.sol```
 
-MINTING TOKENS:
+#### MINTING TOKENS:
 The deployment file ```2_deploy_contracts.js``` contains the needed logic to deploy 10 tokens after deploying the contracts.
 
-OPENSEA:
+#### OPENSEA:
 Contract in Rinkeby: 
 https://rinkeby.etherscan.io/address/0xFF4C9994BffbF915Aa04A97De0D2B52195920310
 
@@ -30,14 +34,3 @@ https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/2
 https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/3
 https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/4
 https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/5
-
-# Project Resources
-
-* [Remix - Solidity IDE](https://remix.ethereum.org/)
-* [Visual Studio Code](https://code.visualstudio.com/)
-* [Truffle Framework](https://truffleframework.com/)
-* [Ganache - One Click Blockchain](https://truffleframework.com/ganache)
-* [Open Zeppelin ](https://openzeppelin.org/)
-* [Interactive zero knowledge 3-colorability demonstration](http://web.mit.edu/~ezyang/Public/graph/svg.html)
-* [Docker](https://docs.docker.com/install/)
-* [ZoKrates](https://github.com/Zokrates/ZoKrates)
