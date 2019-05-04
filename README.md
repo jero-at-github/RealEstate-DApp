@@ -9,8 +9,8 @@ Rinkeby: ```npm run deploy-rinkeby```
 ```npm run test```
 
 #### ZOKRATES:
-The zokrates folder contains 10 proof files for different values (square-result)
-The verifier is located in the "contracts" folder under the name ```Verifier.sol```
+The zokrates folder contains 10 proof files for different values (square-result)  
+The verifier contract is located in the "contracts" folder under the name ```Verifier.sol```
 
 #### MINTING TOKENS:
 The deployment file ```2_deploy_contracts.js``` contains the needed logic to deploy 10 tokens after deploying the contracts.
