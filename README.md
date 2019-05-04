@@ -28,7 +28,7 @@ https://rinkeby.opensea.io/category/namev13
 OpenSea buyer account:
 https://rinkeby.opensea.io/accounts/0x5ecd0ccd50d9ca527923e8dc4f55ed30b740b8c7
 
-Properties:
+Properties:  
 https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/1
 https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/2
 https://rinkeby.opensea.io/assets/0xff4c9994bffbf915aa04a97de0d2b52195920310/3
