@@ -15,10 +15,11 @@ The verifier contract is located in the "contracts" folder under the name ```Ver
 #### MINTING TOKENS:
 The deployment file ```2_deploy_contracts.js``` contains the needed logic to deploy 10 tokens after deploying the contracts.
 
-#### OPENSEA:
+#### RINKEBY:
 Contract in Rinkeby: 
 https://rinkeby.etherscan.io/address/0xFF4C9994BffbF915Aa04A97De0D2B52195920310
 
+#### OPENSEA:
 OpenSea seller account:
 https://rinkeby.opensea.io/accounts/0x4348e2f2ac596e44e6a6d4151ae84e4aa4126a8d
 
